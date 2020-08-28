@@ -5,9 +5,11 @@ INCLUDE(CTest)
 LINK_LIBRARIES(rview++ registration++ transformation++ image++ geometry++ common++)
 
 #add google test
-SET (GTEST_SOURCEDIR ../gtest)
-ADD_SUBDIRECTORY(${GTEST_SOURCEDIR} ${GTEST_SOURCEDIR}/build)
-INCLUDE_DIRECTORIES(${GTEST_SOURCEDIR}/include ${source_dir})
+#SET (GTEST_SOURCEDIR ../gtest)
+#ADD_SUBDIRECTORY(${GTEST_SOURCEDIR} ${GTEST_SOURCEDIR}/build)
+
+link_directories(/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/temp/lib64)
+INCLUDE_DIRECTORIES(/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/temp/include ${source_dir})
 
 ENABLE_TESTING()
 

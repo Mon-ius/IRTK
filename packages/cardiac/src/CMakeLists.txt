@@ -13,5 +13,7 @@ irtkCardiacSpatialCorrection.cc
 irtkTagFunction.cc
 )
 
+INCLUDE_DIRECTORIES(CARDIAC_INCLUDES)
+
 ADD_LIBRARY(cardiac++ ${CARDIAC_INCLUDES} ${CARDIAC_SRCS})
 INSTALL_FILES(/include FILES ${CARDIAC_INCLUDES})
