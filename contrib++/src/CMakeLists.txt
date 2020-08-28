@@ -1,5 +1,14 @@
 SET(CONTRIB_INCLUDES
-    ../include/*.h
+    ../include/irtkArith.h
+    ../include/irtkCityBlockDistanceTransform.h
+    ../include/irtkEigenAnalysis.h
+    ../include/irtkEuclideanDistanceTransform.h
+    ../include/irtkManifoldLearning.h
+    ../include/irtkMatrix3x3.h
+    ../include/irtkPairwiseSimilarity.h
+    ../include/irtkPoint4D.h
+    ../include/irtkSpectralClustering.h
+    ../include/irtkVector3.h
 )
 
 SET(CONTRIB_SRCS 
