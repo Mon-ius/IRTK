@@ -156,7 +156,7 @@ ENDIF (@BUILD_WITH_PNG_FLAG@)
 
 IF (@BUILD_WITH_VTK_FLAG@)
    # Add VTK
-   INCLUDE(${CMAKE_ROOT}/Modules/FindVTK.cmake)
+   INCLUDE(${CMAKE_ROOT}/Modules/VTKConfig.cmake)
 
    IF (VTK_FOUND)
       ADD_DEFINITIONS(-DHAS_VTK)
