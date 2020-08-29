@@ -26,7 +26,7 @@ IF (BUILD_GPU_SUPPORT_WITH_CUDA)
   add_subdirectory(packages/segmentation/src/irtkReconstructionCuda)
 ENDIF(BUILD_GPU_SUPPORT_WITH_CUDA)
 
-SUBDIRS(common++/src geometry++/src image++/src contrib++/src applications packages documentation wrapping) 
+SUBDIRS(common++/src geometry++/src image++ contrib++ applications packages documentation wrapping) 
 
 INCLUDE(${IRTK_SOURCE_DIR}/config/IRTKInclude.cmake)
 
