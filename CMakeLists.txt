@@ -30,11 +30,6 @@ SUBDIRS(common++/src geometry++/src image++/src contrib++/src applications packa
 
 INCLUDE(${IRTK_SOURCE_DIR}/config/IRTKInclude.cmake)
 
-OPTION(BUILD_TESTS "Build units tests" ON)
-IF (BUILD_TESTS)
-  MESSAGE("-- Unit tests enabled")
-  ADD_SUBDIRECTORY (test)                 
-ENDIF(BUILD_TESTS)
 
 SET(EXECUTABLE_OUTPUT_PATH ${IRTK_BINARY_DIR}/bin CACHE STRING
   "Where to put the executables")
