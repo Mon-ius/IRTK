@@ -372,8 +372,7 @@ void irtkShapeBasedInterpolateImageFunction::Refine()
 
 	// Default mode
 	irtkEuclideanDistanceTransform<irtkRealPixel> 
-	  *edt = new irtkEuclideanDistanceTransform<irtkRealPixel>
-	  (irtkEuclideanDistanceTransform<irtkRealPixel>::irtkDistanceTransform3D);
+	  *edt = new irtkEuclideanDistanceTransform<irtkRealPixel>(1);
 		  
 	// Threshold image
 	inputA = _tinput;
