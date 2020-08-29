@@ -14,7 +14,7 @@ set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include
 set_target_properties(image++ PROPERTIES OUTPUT_NAME image++)
 
 if(UNIX AND NOT ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  TARGET_LINK_LIBRARIES(${PROJECT_NAME} rt)
+  TARGET_LINK_LIBRARIES(image++ rt)
 endif()
 
 install(TARGETS 
