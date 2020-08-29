@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.10)
-project(IMAGE CC)
+project(IMAGE C)
 
 include_directories(include ${CONTRIB_INCLUDE_DIRS})
 
