@@ -34,282 +34,282 @@ const char *irtkShapeBasedInterpolateImageFunction::NameOfClass()
 
 
 
-void irtkShapeBasedInterpolateImageFunction::Initialize()
-{
-  /// Initialize baseclass
-  this->irtkImageFunction::Initialize();
+// void irtkShapeBasedInterpolateImageFunction::Initialize()
+// {
+//   /// Initialize baseclass
+//   this->irtkImageFunction::Initialize();
 
-  double xsize, ysize, zsize, size;
-  int new_x, new_y, new_z, x, y, z, t,labelcount;
-  double xaxis[3], yaxis[3], zaxis[3];
-  double new_xsize, new_ysize, new_zsize;
-  double old_xsize, old_ysize, old_zsize;
-  double min,max,current,sum,sumcount;
+//   double xsize, ysize, zsize, size;
+//   int new_x, new_y, new_z, x, y, z, t,labelcount;
+//   double xaxis[3], yaxis[3], zaxis[3];
+//   double new_xsize, new_ysize, new_zsize;
+//   double old_xsize, old_ysize, old_zsize;
+//   double min,max,current,sum,sumcount;
 
-  _dmap = irtkRealImage(_input->GetImageAttributes());
-  _tinput = irtkRealImage(_input->GetImageAttributes());
+//   _dmap = irtkRealImage(_input->GetImageAttributes());
+//   _tinput = irtkRealImage(_input->GetImageAttributes());
 
-  // Initialize _rinput _rdmap
-  _input->GetPixelSize(&xsize, &ysize, &zsize);
-  size = xsize;
-  size = (size < ysize) ? size : ysize;
-  size = (size < zsize) ? size : zsize;
-  if(size > 1) size = 1;
-  cerr << "Create Images with isotropic voxel size (in mm): "<< size << endl;
+//   // Initialize _rinput _rdmap
+//   _input->GetPixelSize(&xsize, &ysize, &zsize);
+//   size = xsize;
+//   size = (size < ysize) ? size : ysize;
+//   size = (size < zsize) ? size : zsize;
+//   if(size > 1) size = 1;
+//   cerr << "Create Images with isotropic voxel size (in mm): "<< size << endl;
 
-  // Create _rinput _rdmap
+//   // Create _rinput _rdmap
 
-  // Determine the old dimensions of the image
-  _input->GetPixelSize(&old_xsize, &old_ysize, &old_zsize);
+//   // Determine the old dimensions of the image
+//   _input->GetPixelSize(&old_xsize, &old_ysize, &old_zsize);
 
-  // Determine the new dimensions of the image
-  new_x = int(_input->GetX() * old_xsize / size);
-  new_y = int(_input->GetY() * old_ysize / size);
-  new_z = int(_input->GetZ() * old_zsize / size);
+//   // Determine the new dimensions of the image
+//   new_x = int(_input->GetX() * old_xsize / size);
+//   new_y = int(_input->GetY() * old_ysize / size);
+//   new_z = int(_input->GetZ() * old_zsize / size);
 
-  // Determine the new voxel dimensions
-  if (new_x < 1) {
-    new_x     =  1;
-    new_xsize =  old_xsize;
-  } else {
-    new_xsize = size;
-  }
-  if (new_y < 1) {
-    new_y     =  1;
-    new_ysize =  old_ysize;
-  } else {
-    new_ysize = size;
-  }
-  if (new_z < 1) {
-    new_z     =  1;
-    new_zsize =  old_zsize;
-  } else {
-    new_zsize = size;
-  }
+//   // Determine the new voxel dimensions
+//   if (new_x < 1) {
+//     new_x     =  1;
+//     new_xsize =  old_xsize;
+//   } else {
+//     new_xsize = size;
+//   }
+//   if (new_y < 1) {
+//     new_y     =  1;
+//     new_ysize =  old_ysize;
+//   } else {
+//     new_ysize = size;
+//   }
+//   if (new_z < 1) {
+//     new_z     =  1;
+//     new_zsize =  old_zsize;
+//   } else {
+//     new_zsize = size;
+//   }
 
-  // Allocate new image
-  _rinput = irtkRealImage(new_x, new_y, new_z, _input->GetT());
-  _rdmap = irtkRealImage(new_x, new_y, new_z, _input->GetT());
-  _rcdmap = irtkRealImage(new_x, new_y, new_z, _input->GetT());
+//   // Allocate new image
+//   _rinput = irtkRealImage(new_x, new_y, new_z, _input->GetT());
+//   _rdmap = irtkRealImage(new_x, new_y, new_z, _input->GetT());
+//   _rcdmap = irtkRealImage(new_x, new_y, new_z, _input->GetT());
 
-  // Set new voxel size
-  _rinput.PutPixelSize(new_xsize, new_ysize, new_zsize);
-  _rdmap.PutPixelSize(new_xsize, new_ysize, new_zsize);
-  _rcdmap.PutPixelSize(new_xsize, new_ysize, new_zsize);
+//   // Set new voxel size
+//   _rinput.PutPixelSize(new_xsize, new_ysize, new_zsize);
+//   _rdmap.PutPixelSize(new_xsize, new_ysize, new_zsize);
+//   _rcdmap.PutPixelSize(new_xsize, new_ysize, new_zsize);
 
-  // Set new orientation
-  _input ->GetOrientation(xaxis, yaxis, zaxis);
-  _rinput.PutOrientation(xaxis, yaxis, zaxis);
-  _rdmap.PutOrientation(xaxis, yaxis, zaxis);
-  _rcdmap.PutOrientation(xaxis, yaxis, zaxis);
+//   // Set new orientation
+//   _input ->GetOrientation(xaxis, yaxis, zaxis);
+//   _rinput.PutOrientation(xaxis, yaxis, zaxis);
+//   _rdmap.PutOrientation(xaxis, yaxis, zaxis);
+//   _rcdmap.PutOrientation(xaxis, yaxis, zaxis);
 
-  // Set new origin
-  _rinput.PutOrigin(_input->GetOrigin());
-  _rdmap.PutOrigin(_input->GetOrigin());
-  _rcdmap.PutOrigin(_input->GetOrigin());
+//   // Set new origin
+//   _rinput.PutOrigin(_input->GetOrigin());
+//   _rdmap.PutOrigin(_input->GetOrigin());
+//   _rcdmap.PutOrigin(_input->GetOrigin());
 
-  // For every intensity value
-  _input->GetMinMaxAsDouble(&min,&max);
+//   // For every intensity value
+//   _input->GetMinMaxAsDouble(&min,&max);
 
-  labelcount = 0;
-  for(current = min; current <= max; current ++){
-    // Threshold
-    sumcount = 0;
-    for (t = 0; t < _tinput.GetT(); t++){
-      for (z = 0; z < _tinput.GetZ(); z++) {
-	for (y = 0; y < _tinput.GetY(); y++) {
-	  for (x = 0; x < _tinput.GetX(); x++) {
-	    if (_input->GetAsDouble(x, y, z, t) < current
-		//|| _input->GetAsDouble(x, y, z, t) > current
-		) {
-	      _tinput(x, y, z, t) = 0;
-	    } else {
-	      _tinput(x, y, z, t) = 1;
-	    }
-	    if(_input->GetAsDouble(x, y, z, t) >= current
-	       && _input->GetAsDouble(x, y, z, t) < current + 1){
-	      sumcount ++;
-	    }
-	  }
-	}
-      }
-    }
+//   labelcount = 0;
+//   for(current = min; current <= max; current ++){
+//     // Threshold
+//     sumcount = 0;
+//     for (t = 0; t < _tinput.GetT(); t++){
+//       for (z = 0; z < _tinput.GetZ(); z++) {
+// 	for (y = 0; y < _tinput.GetY(); y++) {
+// 	  for (x = 0; x < _tinput.GetX(); x++) {
+// 	    if (_input->GetAsDouble(x, y, z, t) < current
+// 		//|| _input->GetAsDouble(x, y, z, t) > current
+// 		) {
+// 	      _tinput(x, y, z, t) = 0;
+// 	    } else {
+// 	      _tinput(x, y, z, t) = 1;
+// 	    }
+// 	    if(_input->GetAsDouble(x, y, z, t) >= current
+// 	       && _input->GetAsDouble(x, y, z, t) < current + 1){
+// 	      sumcount ++;
+// 	    }
+// 	  }
+// 	}
+//       }
+//     }
 	  
-    if(round(current)%20 == 0){
-      if(max < current + 19){
-	cout << "Doing outside DT for value >= : "<< current << " to " << max << endl;
-	cout << "Doing inside DT for value >= : "<< current << " to " << max << endl;
-      }else{
-	cout << "Doing outside DT for value >= : "<< current << " to " << current+19 << endl;
-	cout << "Doing inside DT for value >= : "<< current << " to " << current+19 << endl;
-      }
-    }
+//     if(round(current)%20 == 0){
+//       if(max < current + 19){
+// 	cout << "Doing outside DT for value >= : "<< current << " to " << max << endl;
+// 	cout << "Doing inside DT for value >= : "<< current << " to " << max << endl;
+//       }else{
+// 	cout << "Doing outside DT for value >= : "<< current << " to " << current+19 << endl;
+// 	cout << "Doing inside DT for value >= : "<< current << " to " << current+19 << endl;
+//       }
+//     }
 
-    if(sumcount > 0){
-      labelcount ++;
-      // Dmap _tinput to _dmap
-      {
-	irtkRealImage inputA, inputB, outputA, outputB;
+//     if(sumcount > 0){
+//       labelcount ++;
+//       // Dmap _tinput to _dmap
+//       {
+// 	irtkRealImage inputA, inputB, outputA, outputB;
 
-	// Default mode
-	irtkEuclideanDistanceTransform<irtkRealPixel> 
-	  *edt = new irtkEuclideanDistanceTransform<irtkRealPixel>
-	  (irtkEuclideanDistanceTransform<irtkRealPixel>::irtkDistanceTransform3D);
+// 	// Default mode
+// 	irtkEuclideanDistanceTransform<irtkRealPixel> 
+// 	  *edt = new irtkEuclideanDistanceTransform<irtkRealPixel>
+// 	  (irtkEuclideanDistanceTransform<irtkRealPixel>::irtkDistanceTransform3D);
 
-	// Threshold image
-	inputA = _tinput;
-	inputB = _tinput;
-	for (t = 0; t < _tinput.GetT(); t++){
-	  for (z = 0; z < _tinput.GetZ(); z++) {
-	    for (y = 0; y < _tinput.GetY(); y++) {
-	      for (x = 0; x < _tinput.GetX(); x++) {
-		if (_tinput(x, y, z, t) > 0.5) {
-		  inputA(x, y, z, t) = 1;
-		  inputB(x, y, z, t) = 0;
-		} else {
-		  inputA(x, y, z, t) = 0;
-		  inputB(x, y, z, t) = 1;
-		}
-	      }
-	    }
-	  }
-	}
+// 	// Threshold image
+// 	inputA = _tinput;
+// 	inputB = _tinput;
+// 	for (t = 0; t < _tinput.GetT(); t++){
+// 	  for (z = 0; z < _tinput.GetZ(); z++) {
+// 	    for (y = 0; y < _tinput.GetY(); y++) {
+// 	      for (x = 0; x < _tinput.GetX(); x++) {
+// 		if (_tinput(x, y, z, t) > 0.5) {
+// 		  inputA(x, y, z, t) = 1;
+// 		  inputB(x, y, z, t) = 0;
+// 		} else {
+// 		  inputA(x, y, z, t) = 0;
+// 		  inputB(x, y, z, t) = 1;
+// 		}
+// 	      }
+// 	    }
+// 	  }
+// 	}
 
-	// Calculate EDT
-	edt->SetInput (& inputA);
-	edt->SetOutput(&outputA);
-	edt->Run();		  
-	edt->SetInput (& inputB);
-	edt->SetOutput(&outputB);
-	edt->Run();
-	for (t = 0 ; t < _tinput.GetT(); t++){
-	  for (z = 0; z < _tinput.GetZ(); z++) {
-	    for (y = 0; y < _tinput.GetY(); y++) {
-	      for (x = 0; x < _tinput.GetX(); x++) {
-		_dmap(x, y, z, t)  = sqrt(outputA(x, y, z, t)) - sqrt(outputB(x, y, z, t));
-	      }
-	    }
-	  }
-	}
-	//fix the result to better visiualization and cspline interpolation
-	/*_dmap.GetMinMaxAsDouble(&dmin,&dmax);
-	  if( abs(dmin) > abs(dmax))
-	  dmin = abs(dmax);
-	  for (t = 0; t < _tinput.GetT(); t++){
-	  for (z = 0; z < _tinput.GetZ(); z++) {
-	  for (y = 0; y < _tinput.GetY(); y++){
-	  for (x = 0; x < _tinput.GetX(); x++){
-	  if(_dmap.GetAsDouble(x,y,z,t) > abs(dmin)){
-	  _dmap(x, y, z, t) = abs(dmin);
-	  }
-	  }
-	  }			
-	  }
-	  }*/
-	//_dmap.Write("testoutput0.nii");
-      }
+// 	// Calculate EDT
+// 	edt->SetInput (& inputA);
+// 	edt->SetOutput(&outputA);
+// 	edt->Run();		  
+// 	edt->SetInput (& inputB);
+// 	edt->SetOutput(&outputB);
+// 	edt->Run();
+// 	for (t = 0 ; t < _tinput.GetT(); t++){
+// 	  for (z = 0; z < _tinput.GetZ(); z++) {
+// 	    for (y = 0; y < _tinput.GetY(); y++) {
+// 	      for (x = 0; x < _tinput.GetX(); x++) {
+// 		_dmap(x, y, z, t)  = sqrt(outputA(x, y, z, t)) - sqrt(outputB(x, y, z, t));
+// 	      }
+// 	    }
+// 	  }
+// 	}
+// 	//fix the result to better visiualization and cspline interpolation
+// 	/*_dmap.GetMinMaxAsDouble(&dmin,&dmax);
+// 	  if( abs(dmin) > abs(dmax))
+// 	  dmin = abs(dmax);
+// 	  for (t = 0; t < _tinput.GetT(); t++){
+// 	  for (z = 0; z < _tinput.GetZ(); z++) {
+// 	  for (y = 0; y < _tinput.GetY(); y++){
+// 	  for (x = 0; x < _tinput.GetX(); x++){
+// 	  if(_dmap.GetAsDouble(x,y,z,t) > abs(dmin)){
+// 	  _dmap(x, y, z, t) = abs(dmin);
+// 	  }
+// 	  }
+// 	  }			
+// 	  }
+// 	  }*/
+// 	//_dmap.Write("testoutput0.nii");
+//       }
 
-      // Linear Interpolate Dmap _dmap to _rdmap
-      {
-	double i,j,k,l;
-	irtkLinearInterpolateImageFunction interpolator;
-	interpolator.SetInput(&_dmap);
-	interpolator.Initialize();
+//       // Linear Interpolate Dmap _dmap to _rdmap
+//       {
+// 	double i,j,k,l;
+// 	irtkLinearInterpolateImageFunction interpolator;
+// 	interpolator.SetInput(&_dmap);
+// 	interpolator.Initialize();
 
-	for (t = 0 ; t < _rdmap.GetT(); t++){
-	  for (z = 0; z < _rdmap.GetZ(); z++) {
-	    for (y = 0; y < _rdmap.GetY(); y++) {
-	      for (x = 0; x < _rdmap.GetX(); x++) {
-		i = x; j = y; k = z; l = t;
-		_rdmap.ImageToWorld(i,j,k);
-		_dmap.WorldToImage(i,j,k);
-		_rdmap.PutAsDouble(x,y,z,t,interpolator.Evaluate(i,j,k,l));
-	      }
-	    }
-	  }
-	}
-	//_rdmap.Write("testoutput1.nii");
-      }
+// 	for (t = 0 ; t < _rdmap.GetT(); t++){
+// 	  for (z = 0; z < _rdmap.GetZ(); z++) {
+// 	    for (y = 0; y < _rdmap.GetY(); y++) {
+// 	      for (x = 0; x < _rdmap.GetX(); x++) {
+// 		i = x; j = y; k = z; l = t;
+// 		_rdmap.ImageToWorld(i,j,k);
+// 		_dmap.WorldToImage(i,j,k);
+// 		_rdmap.PutAsDouble(x,y,z,t,interpolator.Evaluate(i,j,k,l));
+// 	      }
+// 	    }
+// 	  }
+// 	}
+// 	//_rdmap.Write("testoutput1.nii");
+//       }
 
-      // Put value back to Resampled Image _rinput < 0 if _rinput == 0 let the neighbor vote.
-      {
-	for (t = 0 ; t < _rdmap.GetT(); t++){
-	  for (z = 0; z < _rdmap.GetZ(); z++) {
-	    for (y = 0; y < _rdmap.GetY(); y++) {
-	      for (x = 0; x < _rdmap.GetX(); x++) {
-		if(_rdmap.GetAsDouble(x,y,z,t) < 0){
-		  _rinput.PutAsDouble(x,y,z,t,current);
-		}else if(_rdmap.GetAsDouble(x,y,z,t) <= 0){
-		  sum = 0; sumcount = 0;
-		  if (x > 0) {
-		    sum += _rdmap.GetAsDouble(x-1,y,z,t); 
-		    sumcount ++;
-		  }
-		  if (x < _rinput.GetX() - 1) {
-		    sum += _rdmap.GetAsDouble(x+1,y,z,t); 
-		    sumcount ++;
-		  }
-		  if (y > 0) {
-		    sum += _rdmap.GetAsDouble(x,y-1,z,t); 
-		    sumcount ++;
-		  } 
-		  if (y < _rinput.GetY() - 1) {
-		    sum += _rdmap.GetAsDouble(x,y+1,z,t); 
-		    sumcount++;
-		  }
-		  if (z > 0) {
-		    sum += _rdmap.GetAsDouble(x,y,z-1,t); 
-		    sumcount++;
-		  }
-		  if (z < _rinput.GetZ() - 1) {
-		    sum += _rdmap.GetAsDouble(x,y,z+1,t); 
-		    sumcount++;
-		  }
-		  sum = sum/sumcount;
-		  if(sum <= 0){
-		    _rinput.PutAsDouble(x,y,z,t,current);
-		  }
-		}
-	      }
-	    }
-	  }
-	}
-      }
-    }
+//       // Put value back to Resampled Image _rinput < 0 if _rinput == 0 let the neighbor vote.
+//       {
+// 	for (t = 0 ; t < _rdmap.GetT(); t++){
+// 	  for (z = 0; z < _rdmap.GetZ(); z++) {
+// 	    for (y = 0; y < _rdmap.GetY(); y++) {
+// 	      for (x = 0; x < _rdmap.GetX(); x++) {
+// 		if(_rdmap.GetAsDouble(x,y,z,t) < 0){
+// 		  _rinput.PutAsDouble(x,y,z,t,current);
+// 		}else if(_rdmap.GetAsDouble(x,y,z,t) <= 0){
+// 		  sum = 0; sumcount = 0;
+// 		  if (x > 0) {
+// 		    sum += _rdmap.GetAsDouble(x-1,y,z,t); 
+// 		    sumcount ++;
+// 		  }
+// 		  if (x < _rinput.GetX() - 1) {
+// 		    sum += _rdmap.GetAsDouble(x+1,y,z,t); 
+// 		    sumcount ++;
+// 		  }
+// 		  if (y > 0) {
+// 		    sum += _rdmap.GetAsDouble(x,y-1,z,t); 
+// 		    sumcount ++;
+// 		  } 
+// 		  if (y < _rinput.GetY() - 1) {
+// 		    sum += _rdmap.GetAsDouble(x,y+1,z,t); 
+// 		    sumcount++;
+// 		  }
+// 		  if (z > 0) {
+// 		    sum += _rdmap.GetAsDouble(x,y,z-1,t); 
+// 		    sumcount++;
+// 		  }
+// 		  if (z < _rinput.GetZ() - 1) {
+// 		    sum += _rdmap.GetAsDouble(x,y,z+1,t); 
+// 		    sumcount++;
+// 		  }
+// 		  sum = sum/sumcount;
+// 		  if(sum <= 0){
+// 		    _rinput.PutAsDouble(x,y,z,t,current);
+// 		  }
+// 		}
+// 	      }
+// 	    }
+// 	  }
+// 	}
+//       }
+//     }
 
-    // End for
-  }
-  if(labelcount > 3 && labelcount < 50){
-    //_rinput.Write("beforerefine.nii");
-    this->Refine();
-  }
-  // Compute image domain
-  this->_x = this->_input->GetX();
-  this->_y = this->_input->GetY();
-  this->_z = this->_input->GetZ();
+//     // End for
+//   }
+//   if(labelcount > 3 && labelcount < 50){
+//     //_rinput.Write("beforerefine.nii");
+//     this->Refine();
+//   }
+//   // Compute image domain
+//   this->_x = this->_input->GetX();
+//   this->_y = this->_input->GetY();
+//   this->_z = this->_input->GetZ();
 
-  this->_rx = this->_rinput.GetX();
-  this->_ry = this->_rinput.GetY();
-  this->_rz = this->_rinput.GetZ();
+//   this->_rx = this->_rinput.GetX();
+//   this->_ry = this->_rinput.GetY();
+//   this->_rz = this->_rinput.GetZ();
 
-  // Compute domain on which the linear interpolation is defined
-  this->_x1 = 0;
-  this->_y1 = 0;
-  this->_z1 = 0;
-  this->_x2 = this->_rinput.GetX() - 1;
-  this->_y2 = this->_rinput.GetY() - 1;
-  this->_z2 = this->_rinput.GetZ() - 1;
+//   // Compute domain on which the linear interpolation is defined
+//   this->_x1 = 0;
+//   this->_y1 = 0;
+//   this->_z1 = 0;
+//   this->_x2 = this->_rinput.GetX() - 1;
+//   this->_y2 = this->_rinput.GetY() - 1;
+//   this->_z2 = this->_rinput.GetZ() - 1;
 
-  // Calculate offsets for fast pixel access
-  this->_offset1 = 0;
-  this->_offset2 = 1;
-  this->_offset3 = this->_rinput.GetX();
-  this->_offset4 = this->_rinput.GetX()+1;
-  this->_offset5 = this->_rinput.GetX()*this->_rinput.GetY();
-  this->_offset6 = this->_rinput.GetX()*this->_rinput.GetY()+1;
-  this->_offset7 = this->_rinput.GetX()*this->_rinput.GetY()+this->_rinput.GetX();
-  this->_offset8 = this->_rinput.GetX()*this->_rinput.GetY()+this->_rinput.GetX()+1;
-}
+//   // Calculate offsets for fast pixel access
+//   this->_offset1 = 0;
+//   this->_offset2 = 1;
+//   this->_offset3 = this->_rinput.GetX();
+//   this->_offset4 = this->_rinput.GetX()+1;
+//   this->_offset5 = this->_rinput.GetX()*this->_rinput.GetY();
+//   this->_offset6 = this->_rinput.GetX()*this->_rinput.GetY()+1;
+//   this->_offset7 = this->_rinput.GetX()*this->_rinput.GetY()+this->_rinput.GetX();
+//   this->_offset8 = this->_rinput.GetX()*this->_rinput.GetY()+this->_rinput.GetX()+1;
+// }
 
 void irtkShapeBasedInterpolateImageFunction::Refine()
 {
@@ -666,24 +666,24 @@ double irtkShapeBasedInterpolateImageFunction::EvaluateLinear(double x, double y
   return val;
 }
 
-// void irtkShapeBasedInterpolateImageFunction::Initialize()
-// {
-//   /// Initialize baseclass
-//   this->irtkImageFunction::Initialize();
+void irtkShapeBasedInterpolateImageFunction::Initialize()
+{
+  /// Initialize baseclass
+  this->irtkImageFunction::Initialize();
 
-//   // Compute image domain
-//   this->_x = this->_input->GetX();
-//   this->_y = this->_input->GetY();
-//   this->_z = this->_input->GetZ();
+  // Compute image domain
+  this->_x = this->_input->GetX();
+  this->_y = this->_input->GetY();
+  this->_z = this->_input->GetZ();
 
-//   // Compute domain on which the linear interpolation is defined
-//   this->_x1 = -0.5;
-//   this->_y1 = -0.5;
-//   this->_z1 = -0.5;
-//   this->_x2 = this->_input->GetX()-0.5;
-//   this->_y2 = this->_input->GetY()-0.5;
-//   this->_z2 = this->_input->GetZ()-0.5;
-// }
+  // Compute domain on which the linear interpolation is defined
+  this->_x1 = -0.5;
+  this->_y1 = -0.5;
+  this->_z1 = -0.5;
+  this->_x2 = this->_input->GetX()-0.5;
+  this->_y2 = this->_input->GetY()-0.5;
+  this->_z2 = this->_input->GetZ()-0.5;
+}
 
 double irtkShapeBasedInterpolateImageFunction::EvaluateInside(double x, double y, double z, double t)
 {

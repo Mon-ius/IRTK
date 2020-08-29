@@ -37,6 +37,8 @@ typedef class irtkGenericImage<irtkGreyPixel> irtkGreyImage;
 /// Float image
 typedef class irtkGenericImage<irtkRealPixel> irtkRealImage;
 
+enum irtkDistanceTransformMode { irtkDistanceTransform2D, irtkDistanceTransform3D };
+
 #ifndef _IMPLEMENTS_GENERICIMAGE_
 
 extern template class irtkGenericImage<irtkBytePixel>;
