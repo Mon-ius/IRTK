@@ -178,36 +178,36 @@ ENDIF (BUILD_WITH_PNG)
 # Option to build with VTK or not.
 OPTION(BUILD_WITH_VTK "Build using VTK" OFF)
 
-IF (BUILD_WITH_VTK)
+# IF (BUILD_WITH_VTK)
    # Add VTK
-   INCLUDE(${CMAKE_ROOT}/Modules/VTKConfig.cmake)
+  #  INCLUDE(${CMAKE_ROOT}/Modules/VTKConfig.cmake)
 
-   IF (VTK_FOUND)
+  #  IF (VTK_FOUND)
       ADD_DEFINITIONS(-DHAS_VTK)
-      INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS})
-      LINK_DIRECTORIES(${VTK_LIBRARY_DIRS})
+      INCLUDE_DIRECTORIES("/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/library/include/vtk-9.0")
+      LINK_DIRECTORIES("/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/library/lib64")
 
       # Add patented library if available
-      IF (VTK_KITS MATCHES "PATENTED")
-         ADD_DEFINITIONS(-DHAS_VTK_PATENTED)
-	  LINK_LIBRARIES (vtkPatented)
-      ENDIF (VTK_KITS MATCHES "PATENTED")
+    #   IF (VTK_KITS MATCHES "PATENTED")
+    #      ADD_DEFINITIONS(-DHAS_VTK_PATENTED)
+	  # LINK_LIBRARIES (vtkPatented)
+    #   ENDIF (VTK_KITS MATCHES "PATENTED")
 
        # Add patented library if available
-      IF (VTK_KITS MATCHES "HYBRID")
-         ADD_DEFINITIONS(-DHAS_VTK_HYBRID)
-	 LINK_LIBRARIES (vtkHybrid)
-      ENDIF (VTK_KITS MATCHES "HYBRID")
+  #     IF (VTK_KITS MATCHES "HYBRID")
+  #        ADD_DEFINITIONS(-DHAS_VTK_HYBRID)
+	#  LINK_LIBRARIES (vtkHybrid)
+  #     ENDIF (VTK_KITS MATCHES "HYBRID")
 
-IF("${VTK_MAJOR_VERSION}" GREATER 5)
-     LINK_LIBRARIES (${VTK_LIBRARIES})
-ELSE("${VTK_MAJOR_VERSION}" GREATER 5)
-     LINK_LIBRARIES (vtkRendering vtkImaging
-      vtkGraphics vtkFiltering vtkIO vtkCommon)
-ENDIF("${VTK_MAJOR_VERSION}" GREATER 5)
+# IF("${VTK_MAJOR_VERSION}" GREATER 5)
+    #  LINK_LIBRARIES (${VTK_LIBRARIES})
+# ELSE("${VTK_MAJOR_VERSION}" GREATER 5)
+#      LINK_LIBRARIES (vtkRendering vtkImaging
+#       vtkGraphics vtkFiltering vtkIO vtkCommon)
+# ENDIF("${VTK_MAJOR_VERSION}" GREATER 5)
 
-   ENDIF (VTK_FOUND)
-ENDIF (BUILD_WITH_VTK)
+#    ENDIF (VTK_FOUND)
+# ENDIF (BUILD_WITH_VTK)
 
 
 LINK_LIBRARIES(segmentation++ registration2++ registration++ transformation++ contrib++
