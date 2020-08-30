@@ -183,9 +183,9 @@ OPTION(BUILD_WITH_VTK "Build using VTK" OFF)
   #  INCLUDE(${CMAKE_ROOT}/Modules/VTKConfig.cmake)
 
   #  IF (VTK_FOUND)
-      ADD_DEFINITIONS(-DHAS_VTK)
-      INCLUDE_DIRECTORIES("/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/library/include/vtk-9.0")
-      LINK_DIRECTORIES("/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/library/lib64")
+      # ADD_DEFINITIONS(-DHAS_VTK)
+      # INCLUDE_DIRECTORIES("/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/library/include/vtk-9.0")
+      # LINK_DIRECTORIES("/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/library/lib64")
 
       # Add patented library if available
     #   IF (VTK_KITS MATCHES "PATENTED")
