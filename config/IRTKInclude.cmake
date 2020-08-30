@@ -180,7 +180,7 @@ OPTION(BUILD_WITH_VTK "Build using VTK" OFF)
 
 IF (BUILD_WITH_VTK)
    # Add VTK
-   INCLUDE(${CMAKE_ROOT}/Modules/FindVTK.cmake)
+   INCLUDE(${CMAKE_ROOT}/Modules/VTKConfig.cmake)
 
    IF (VTK_FOUND)
       ADD_DEFINITIONS(-DHAS_VTK)
