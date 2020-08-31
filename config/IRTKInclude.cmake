@@ -184,8 +184,8 @@ OPTION(BUILD_WITH_VTK "Build using VTK" OFF)
 
   #  IF (VTK_FOUND)
       ADD_DEFINITIONS(-DHAS_VTK)
-      INCLUDE_DIRECTORIES("/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/temp/vtk5.10/include")
-      LINK_DIRECTORIES("/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/temp/vtk5.10/lib")
+      INCLUDE_DIRECTORIES("/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/temp/vtk5.10/include/vtk-5.10")
+      LINK_DIRECTORIES("/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/temp/vtk5.10/lib/vtk-5.10")
 
       # Add patented library if available
     #   IF (VTK_KITS MATCHES "PATENTED")
