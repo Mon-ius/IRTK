@@ -5,7 +5,7 @@ ENDIF (USE_VXL)
 
 # Convenience macros
 MACRO(ADD_IRTK_EXECUTABLE name)
-  target_link_libraries(${name} ${VTK_LIBRARY_DIRS})
+  # target_link_libraries(${name} ${VTK_LIBRARY_DIRS})
   ADD_EXECUTABLE(${name} ${name}.cc ${ARGN})
   INSTALL_TARGETS(/bin ${name})
 ENDMACRO(ADD_IRTK_EXECUTABLE name)
