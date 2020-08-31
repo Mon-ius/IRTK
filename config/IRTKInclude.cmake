@@ -177,38 +177,36 @@ ENDIF (BUILD_WITH_PNG)
 
 # Option to build with VTK or not.
 OPTION(BUILD_WITH_VTK "Build using VTK" ON)
-
-# IF (BUILD_WITH_VTK)
+IF (BUILD_WITH_VTK)
    # Add VTK
-  #  INCLUDE(${CMAKE_ROOT}/Modules/VTKConfig.cmake)
+   INCLUDE(/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/temp/vtk5.10/lib/vtk-5.10/VTKConfig.cmake)
 
-  #  IF (VTK_FOUND)
+   IF (VTK_FOUND)
       ADD_DEFINITIONS(-DHAS_VTK)
-      set(VTK_INCLUDE_DIRS "/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/temp/vtk5.10/include/vtk-5.10")
-      set(VTK_LIBRARY_DIRS "/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/temp/vtk5.10/lib/vtk-5.10")
       INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS})
       LINK_DIRECTORIES(${VTK_LIBRARY_DIRS})
+
       # Add patented library if available
-    #   IF (VTK_KITS MATCHES "PATENTED")
-    #      ADD_DEFINITIONS(-DHAS_VTK_PATENTED)
-	  # LINK_LIBRARIES (vtkPatented)
-    #   ENDIF (VTK_KITS MATCHES "PATENTED")
+      IF (VTK_KITS MATCHES "PATENTED")
+         ADD_DEFINITIONS(-DHAS_VTK_PATENTED)
+	  LINK_LIBRARIES (vtkPatented)
+      ENDIF (VTK_KITS MATCHES "PATENTED")
 
        # Add patented library if available
-  #     IF (VTK_KITS MATCHES "HYBRID")
-  #        ADD_DEFINITIONS(-DHAS_VTK_HYBRID)
-	#  LINK_LIBRARIES (vtkHybrid)
-  #     ENDIF (VTK_KITS MATCHES "HYBRID")
+      IF (VTK_KITS MATCHES "HYBRID")
+         ADD_DEFINITIONS(-DHAS_VTK_HYBRID)
+	 LINK_LIBRARIES (vtkHybrid)
+      ENDIF (VTK_KITS MATCHES "HYBRID")
 
-# IF("${VTK_MAJOR_VERSION}" GREATER 5)
-    #  LINK_LIBRARIES (${VTK_LIBRARIES})
-# ELSE("${VTK_MAJOR_VERSION}" GREATER 5)
-#      LINK_LIBRARIES (vtkRendering vtkImaging
-#       vtkGraphics vtkFiltering vtkIO vtkCommon)
-# ENDIF("${VTK_MAJOR_VERSION}" GREATER 5)
+IF("${VTK_MAJOR_VERSION}" GREATER 5)
+     LINK_LIBRARIES (${VTK_LIBRARIES})
+ELSE("${VTK_MAJOR_VERSION}" GREATER 5)
+     LINK_LIBRARIES (vtkRendering vtkImaging
+      vtkGraphics vtkFiltering vtkIO vtkCommon)
+ENDIF("${VTK_MAJOR_VERSION}" GREATER 5)
 
-#    ENDIF (VTK_FOUND)
-# ENDIF (BUILD_WITH_VTK)
+   ENDIF (VTK_FOUND)
+ENDIF (BUILD_WITH_VTK)
 
 
 LINK_LIBRARIES(segmentation++ registration2++ registration++ transformation++ contrib++
