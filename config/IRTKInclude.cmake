@@ -176,7 +176,7 @@ IF (BUILD_WITH_PNG)
 ENDIF (BUILD_WITH_PNG)
 
 # Option to build with VTK or not.
-OPTION(BUILD_WITH_VTK "Build using VTK" OFF)
+OPTION(BUILD_WITH_VTK "Build using VTK" ON)
 
 # IF (BUILD_WITH_VTK)
    # Add VTK
