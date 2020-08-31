@@ -1,4 +1,4 @@
-LINK_LIBRARIES(contrib++ image++ geometry++ common++ ${VTK_LIBRARY_DIRS}) 
+LINK_LIBRARIES(contrib++ image++ geometry++ common++) 
 IF (USE_VXL)
   LINK_LIBRARIES(irtkvnl irtkvcl irtkvnl_algo irtknetlib)
 ENDIF (USE_VXL)

@@ -188,6 +188,7 @@ OPTION(BUILD_WITH_VTK "Build using VTK" ON)
       set(VTK_LIBRARY_DIRS "/castles/nr/projects/d/duanj-ai-in-medical-imaging/.share/temp/vtk5.10/lib/vtk-5.10")
       INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS})
       LINK_DIRECTORIES(${VTK_LIBRARY_DIRS})
+      # LINK_LIBRARIES (${VTK_LIBRARIES})
       # Add patented library if available
     #   IF (VTK_KITS MATCHES "PATENTED")
     #      ADD_DEFINITIONS(-DHAS_VTK_PATENTED)
@@ -201,10 +202,10 @@ OPTION(BUILD_WITH_VTK "Build using VTK" ON)
   #     ENDIF (VTK_KITS MATCHES "HYBRID")
 
 # IF("${VTK_MAJOR_VERSION}" GREATER 5)
-    #  LINK_LIBRARIES (${VTK_LIBRARIES})
+
 # ELSE("${VTK_MAJOR_VERSION}" GREATER 5)
-#      LINK_LIBRARIES (vtkRendering vtkImaging
-#       vtkGraphics vtkFiltering vtkIO vtkCommon)
+     LINK_LIBRARIES (vtkRendering vtkImaging
+      vtkGraphics vtkFiltering vtkIO vtkCommon)
 # ENDIF("${VTK_MAJOR_VERSION}" GREATER 5)
 
 #    ENDIF (VTK_FOUND)
