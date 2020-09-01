@@ -189,7 +189,7 @@ OPTION(BUILD_WITH_VTK "Build using VTK" ON)
       INCLUDE_DIRECTORIES(${VTK_INCLUDE_DIRS})
       LINK_DIRECTORIES(${VTK_LIBRARY_DIRS})
       LINK_LIBRARIES (vtkRendering vtkImaging
-       vtkGraphics vtkFiltering vtkIO vtkCommon)
+       vtkGraphics vtkFiltering vtkIO vtkCommon vtksys)
       # LINK_LIBRARIES (${VTK_LIBRARY_DIRS})
       # Add patented library if available
     #   IF (VTK_KITS MATCHES "PATENTED")
