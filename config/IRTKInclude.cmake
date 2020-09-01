@@ -230,7 +230,7 @@ IF (BUILD_WITH_NIFTI)
 ENDIF (BUILD_WITH_NIFTI)
 
 # Option to build with cardiac spatial temporal correction, segmentation and motion tracking toolbox.
-OPTION(BUILD_CARDIAC "Build with cardiac tool box" OFF)
+OPTION(BUILD_CARDIAC "Build with cardiac tool box" ON)
 IF (BUILD_CARDIAC)
    ADD_DEFINITIONS(-DHAS_CARDIAC)
    INCLUDE_DIRECTORIES(${IRTK_SOURCE_DIR}/packages/cardiac/include)
